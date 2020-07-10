@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: delivery-service
+  labels:
+    app: delivery-service
+spec:
+  selector:
+    app: delivery-service
+  ports:
+  - protocol: TCP
+    port: 3002
+    targetPort: 3002
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-service
+  labels:
+    app: delivery-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: delivery-service
+  template:
+    metadata:
+      labels:
+        app: delivery-service
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "delivery-service"
+        dapr.io/port: "3002"        
+    spec:
+      containers:
+      - name: delivery-service
+        image: daprtalks.azurecr.io/delivery-service:latest
+        ports:
+        - containerPort: 3002
+        imagePullPolicy: IfNotPresent

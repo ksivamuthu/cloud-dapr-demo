@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: order-dotnet-core-service
+  labels:
+    app: order-dotnet-core-service
+spec:
+  selector:
+    app: order-dotnet-core-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-dotnet-core-service
+  labels:
+    app: order-dotnet-core-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-dotnet-core-service
+  template:
+    metadata:
+      labels:
+        app: order-dotnet-core-service
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "order-dotnet-core-service"
+        dapr.io/port: "80"
+    spec:
+      containers:
+      - name: order-dotnet-core-service
+        image:  daprtalks.azurecr.io/order-dotnet-core-service:latest
+        ports:
+        - containerPort: 80
+        imagePullPolicy: IfNotPresent

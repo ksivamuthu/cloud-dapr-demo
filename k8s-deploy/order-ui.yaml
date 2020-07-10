@@ -1,0 +1,38 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: order-ui
+  labels:
+    app: order-ui
+spec:
+  selector:
+    app: order-ui
+  ports:
+  - protocol: TCP
+    port: 4000
+    targetPort: 4000
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-ui
+  labels:
+    app: order-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-ui
+  template:
+    metadata:
+      labels:
+        app: order-ui      
+    spec:
+      containers:
+      - name: order-ui
+        image: daprtalks.azurecr.io/order-ui:latest
+        ports:
+        - containerPort: 4000
+        imagePullPolicy: IfNotPresent

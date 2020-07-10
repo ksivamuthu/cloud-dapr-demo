@@ -1,0 +1,50 @@
+# apiVersion: dapr.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: statestore
+# spec:
+#   type: state.redis
+#   metadata:
+#   - name: redisHost
+#     value: localhost:6379
+#   - name: redisPassword
+#     value: ""
+#   - name: actorStateStore
+#     value: "true"
+
+
+# apiVersion: dapr.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: statestore
+# spec:
+#   type: state.redis
+#   metadata:
+#   - name: actorStateStore
+#     value: "true"
+#   - name: redisHost
+#     value: redis-master:6379
+#   - name: redisPassword
+#     secretKeyRef:
+#       name: redis
+#       key:  redis-password
+# auth:
+#   secretStore: kubernetes
+
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: statestore
+spec:
+  type: state.azure.cosmosdb
+  metadata:
+  - name: url
+    value: https://dapr-talk.documents.azure.com:443/
+  - name: masterKey
+    secretKeyRef:
+      name: azure-cosmos
+      key: access-key
+  - name: database
+    value: daprtalk
+  - name: collection
+    value: orders

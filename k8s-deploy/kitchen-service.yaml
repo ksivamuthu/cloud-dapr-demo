@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kitchen-service
+  labels:
+    app: kitchen-service
+spec:
+  selector:
+    app: kitchen-service
+  ports:
+  - protocol: TCP
+    port: 3001
+    targetPort: 3001
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kitchen-service
+  labels:
+    app: kitchen-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kitchen-service
+  template:
+    metadata:
+      labels:
+        app: kitchen-service
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "kitchen-service"
+        dapr.io/port: "3001"
+    spec:
+      containers:
+      - name: kitchen-service
+        image:  daprtalks.azurecr.io/kitchen-service:latest
+        ports:
+        - containerPort: 3001
+        imagePullPolicy: IfNotPresent

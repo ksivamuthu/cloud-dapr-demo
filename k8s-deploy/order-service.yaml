@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+spec:
+  selector:
+    app: order-service
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "order-service"
+        dapr.io/port: "3000"
+    spec:
+      containers:
+      - name: order-service
+        image:  daprtalks.azurecr.io/order-service:latest
+        ports:
+        - containerPort: 3000
+        imagePullPolicy: IfNotPresent

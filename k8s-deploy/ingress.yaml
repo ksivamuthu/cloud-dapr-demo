@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dapr-demo-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: order-ui
+          servicePort: 4000
+        path: /(.*)
+      - backend:
+          serviceName: order-service
+          servicePort: 3000
+        path: /order-service/(.*)
+      - backend:
+          serviceName: kitchen-service
+          servicePort: 3001
+        path: /kitchen-service/(.*)
+      - backend:
+          serviceName: delivery-service
+          servicePort: 3002
+        path: /delivery-service/(.*)                
