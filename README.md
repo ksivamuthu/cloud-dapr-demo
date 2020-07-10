@@ -28,7 +28,7 @@ Please visit https://dapr.io for documentation and details.
 
 - [Dapr Components](./components)
 - [App Deployments](./k8s-deploy)
-- [Github Actions](./github/workflows/deployToAksCluster.yml)
+- [Github Actions](./.github/workflows/deployToAksCluster.yml)
 
 ## Reference
 
