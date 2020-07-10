@@ -2,7 +2,7 @@
 
 Demo of Dapr runtime and seamless integration of cloud providers.
 
-Presented at ONETUG July 9, 2020. Slides are [here](./docs/DaprTalk.pptx)
+Presented at ONETUG July 9, 2020. Slides are [here](https://speakerdeck.com/ksivamuthu/building-event-driven-apps-with-dapr-in-kubernetes)
 
 ## Overview
 
