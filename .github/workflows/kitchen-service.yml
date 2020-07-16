@@ -1,0 +1,47 @@
+name: Build & Deploy Kitchen Service
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+defaults:
+  run:
+    working-directory: kitchen-service
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy     
+    steps:    
+    - uses: actions/checkout@master
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: daprtalks.azurecr.io
+        username: ${{ secrets.acr_daprtalks_username }}
+        password: ${{ secrets.acr_daprtalks_password }}
+
+    - name: Build and push Kitchen Service to ACR
+      id: build-kitchen-service
+      run: |
+        docker build "$GITHUB_WORKSPACE/kitchen-service" -f  "kitchen-service/Dockerfile" -t daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
+        docker push daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
+
+    - uses: azure/k8s-set-context@v1
+      id: login
+      with:
+         kubeconfig: ${{ secrets.aks_daprtalk_kubeConfig }}
+
+    - uses: azure/k8s-deploy@v1
+      with:
+        namespace: default
+        manifests: |
+          kitchen-service.yaml
+        images: |
+          daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
+        imagepullsecrets: |
+          daprtalkdockerauth
