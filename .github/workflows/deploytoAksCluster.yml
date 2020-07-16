@@ -1,3 +1,4 @@
+name: Dapr Component Deploys
 on: [push]
 jobs:
   build-and-deploy:
