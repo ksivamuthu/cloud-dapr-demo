@@ -81,6 +81,7 @@ app.post('/order-status/:status', async (req, res) => {
 function sendNotification(orderId, status) {
     console.log('Send notification');
     axios.post(notificationUrl, {
+        operation: 'create',
         data: `The order ${orderId} is ${status}`,
         metadata: { toNumber: "412-209-5786" }
     }).then(() => console.log('success'))
