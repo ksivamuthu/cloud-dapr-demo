@@ -7,54 +7,11 @@ jobs:
     
     - uses: actions/checkout@master
     
-    - uses: azure/docker-login@v1
-      with:
-        login-server: daprtalks.azurecr.io
-        username: ${{ secrets.acr_daprtalks_username }}
-        password: ${{ secrets.acr_daprtalks_password }}
-
-    - name: Build and push Order Service to ACR
-      id: build-order-service
-      run: |
-        docker build "$GITHUB_WORKSPACE/order-service" -f  "order-service/Dockerfile" -t daprtalks.azurecr.io/order-service:${{ github.sha }}
-        docker push daprtalks.azurecr.io/order-service:${{ github.sha }}
-    
-    - name: Build and push Kitchen Service to ACR
-      id: build-kitchen-service
-      run: |
-        docker build "$GITHUB_WORKSPACE/kitchen-service" -f  "kitchen-service/Dockerfile" -t daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
-        docker push daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
-
-    - name: Build and push Delivery Service to ACR
-      id: build-delivery-service
-      run: |
-        docker build "$GITHUB_WORKSPACE/delivery-service" -f  "delivery-service/Dockerfile" -t daprtalks.azurecr.io/delivery-service:${{ github.sha }}
-        docker push daprtalks.azurecr.io/delivery-service:${{ github.sha }}      
-        
-    - name: Build and push Order UI to ACR
-      id: build-order-ui
-      run: |
-        docker build "$GITHUB_WORKSPACE/order-ui" -f  "order-ui/Dockerfile" -t daprtalks.azurecr.io/order-ui:${{ github.sha }}
-        docker push daprtalks.azurecr.io/order-ui:${{ github.sha }}              
-    
-    - name: Build and push Order .NET Core Service to ACR
-      id: build-order-dotnet-core-service
-      run: |
-        docker build "$GITHUB_WORKSPACE/order-dotnet-core-service" -f  "order-dotnet-core-service/Dockerfile" -t daprtalks.azurecr.io/order-dotnet-core-service:${{ github.sha }}
-        docker push daprtalks.azurecr.io/order-dotnet-core-service:${{ github.sha }}
-
     - uses: azure/k8s-set-context@v1
       id: login
       with:
          kubeconfig: ${{ secrets.aks_daprtalk_kubeConfig }}
 
-    - uses: azure/k8s-create-secret@v1
-      with:
-        namespace: 'default'
-        secret-type: 'generic'
-        arguments:  --from-literal=access-key=${{ secrets.AZURE_COSMOS_ACCESS_KEY }}
-        secret-name: azure-cosmos        
-    
     - uses: azure/k8s-create-secret@v1
       with:
         namespace: default
@@ -63,6 +20,13 @@ jobs:
         container-registry-password: ${{ secrets.acr_daprtalks_password }}
         secret-name: daprtalkdockerauth
 
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: 'default'
+        secret-type: 'generic'
+        arguments:  --from-literal=access-key=${{ secrets.AZURE_COSMOS_ACCESS_KEY }}
+        secret-name: azure-cosmos        
+  
     - uses: azure/k8s-deploy@v1
       with:
         namespace: default
@@ -75,21 +39,3 @@ jobs:
         namespace: default
         manifests: |
           k8s-deploy/ingress.yaml
-
-    - uses: azure/k8s-deploy@v1
-      with:
-        namespace: default
-        manifests: |
-          k8s-deploy/order-service.yaml
-          k8s-deploy/kitchen-service.yaml
-          k8s-deploy/delivery-service.yaml
-          k8s-deploy/order-ui.yaml
-          k8s-deploy/order-dotnet-core-service.yaml
-        images: |
-          daprtalks.azurecr.io/order-service:${{ github.sha }}
-          daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
-          daprtalks.azurecr.io/delivery-service:${{ github.sha }}
-          daprtalks.azurecr.io/order-ui:${{ github.sha }}
-          daprtalks.azurecr.io/order-dotnet-core-service:${{ github.sha }}
-        imagepullsecrets: |
-          daprtalkdockerauth
