@@ -13,6 +13,7 @@ const daprPort = process.env.DAPR_HTTP_PORT || 3500;
 const stateStore = 'statestore';
 const stateUrl = `http://localhost:${daprPort}/v1.0/state/${stateStore}`;
 const messageUrl = `http://localhost:${daprPort}/v1.0/publish`;
+const notificationUrl = `http://localhost:${daprPort}/v1.0/bindings/notification`
 
 app.get('/healthz', (req, res) => {
     res.send({ app: 'order-service', status: 'healthy' });
@@ -66,14 +67,25 @@ app.get('/dapr/subscribe', (_req, res) => {
     ]);
 });
 
-app.post('/order-status/:status', (req, res) => {
+app.post('/order-status/:status', async (req, res) => {
     const key = req.body.data['key'];
     console.log(`Order ${key} Status: ${req.params.status}`);
+
+    sendNotification(orderId, status);
 
     saveOrderStatus(key, req.params.status)
         .then(() => res.status(200).end())
         .catch(err => res.status(500).send({ message: err }));
 });
+
+function sendNotification(orderId, status) {
+    console.log('Send notification');
+    axios.post(notificationUrl, {
+        data: `The order ${orderId} is ${status}`,
+        metadata: { toNumber: "412-209-5786" }
+    }).then(() => console.log('success'))
+        .catch((e) => console.error(e));
+}
 
 async function saveOrderStatus(orderId, status) {
     const order = await getOrder(orderId);
