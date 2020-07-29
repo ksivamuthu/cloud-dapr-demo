@@ -25,7 +25,14 @@ jobs:
         namespace: 'default'
         secret-type: 'generic'
         arguments:  --from-literal=access-key=${{ secrets.AZURE_COSMOS_ACCESS_KEY }}
-        secret-name: azure-cosmos        
+        secret-name: azure-cosmos       
+        
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: 'default'
+        secret-type: 'generic'
+        arguments:  --from-literal=account-sid=${{ secrets.TWILIO_ACCOUNT_SID }} --from-literal=auth-token=${{ secrets.TWILIO_AUTH_TOKEN }}
+        secret-name: twilio             
   
     - uses: azure/k8s-deploy@v1
       with:

@@ -1,0 +1,17 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: notification
+spec:
+  type: bindings.twilio.sms
+  metadata:
+  - name: fromNumber # required.
+    value: 412-209-5786
+  - name: accountSid # required.
+    secretKeyRef:
+      name: twilio
+      key: account-sid
+  - name: authToken # required.
+    secretKeyRef:
+      name: twilio
+      key: auth-token
