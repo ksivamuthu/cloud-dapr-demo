@@ -28,7 +28,7 @@ jobs:
     - name: Build and push Kitchen Service to ACR
       id: build-kitchen-service
       run: |
-        docker build "$GITHUB_WORKSPACE/kitchen-service" -f  "kitchen-service/Dockerfile" -t daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/kitchen-service" -f  "Dockerfile" -t daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
         docker push daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
 
     - uses: azure/k8s-set-context@v1
@@ -40,7 +40,7 @@ jobs:
       with:
         namespace: default
         manifests: |
-          kitchen-service.yaml
+          kitchen-service/kitchen-service.yaml
         images: |
           daprtalks.azurecr.io/kitchen-service:${{ github.sha }}
         imagepullsecrets: |

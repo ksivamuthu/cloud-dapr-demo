@@ -28,7 +28,7 @@ jobs:
     - name: Build and push Order UI to ACR
       id: build-order-ui
       run: |
-        docker build "$GITHUB_WORKSPACE/order-ui" -f  "order-ui/Dockerfile" -t daprtalks.azurecr.io/order-ui:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/order-ui" -f  "Dockerfile" -t daprtalks.azurecr.io/order-ui:${{ github.sha }}
         docker push daprtalks.azurecr.io/order-ui:${{ github.sha }}
 
     - uses: azure/k8s-set-context@v1
@@ -40,7 +40,7 @@ jobs:
       with:
         namespace: default
         manifests: |
-          k8s-deploy/order-ui.yaml
+          order-ui/order-ui.yaml
         images: |
           daprtalks.azurecr.io/order-ui:${{ github.sha }}
         imagepullsecrets: |

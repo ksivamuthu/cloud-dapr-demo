@@ -28,7 +28,7 @@ jobs:
     - name: Build and push Delivery Service to ACR
       id: build-delivery-service
       run: |
-        docker build "$GITHUB_WORKSPACE/delivery-service" -f  "delivery-service/Dockerfile" -t daprtalks.azurecr.io/delivery-service:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/delivery-service" -f  "Dockerfile" -t daprtalks.azurecr.io/delivery-service:${{ github.sha }}
         docker push daprtalks.azurecr.io/delivery-service:${{ github.sha }}
 
     - uses: azure/k8s-set-context@v1
@@ -40,7 +40,7 @@ jobs:
       with:
         namespace: default
         manifests: |
-          k8s-deploy/delivery-service.yaml
+          delivery-service/delivery-service.yaml
         images: |
           daprtalks.azurecr.io/delivery-service:${{ github.sha }}
         imagepullsecrets: |
