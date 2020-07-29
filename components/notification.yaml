@@ -5,13 +5,13 @@ metadata:
 spec:
   type: bindings.twilio.sms
   metadata:
-  - name: fromNumber # required.
+  - name: fromNumber
     value: "+12037180573"
-  - name: accountSid # required.
+  - name: accountSid 
     secretKeyRef:
       name: twilio
       key: account-sid
-  - name: authToken # required.
+  - name: authToken .
     secretKeyRef:
       name: twilio
       key: auth-token
