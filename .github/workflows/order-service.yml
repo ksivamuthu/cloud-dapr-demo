@@ -28,7 +28,7 @@ jobs:
     - name: Build and push Order Service to ACR
       id: build-order-service
       run: |
-        docker build "$GITHUB_WORKSPACE/order-service" -f  "order-service/Dockerfile" -t daprtalks.azurecr.io/order-service:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/order-service" -f  "Dockerfile" -t daprtalks.azurecr.io/order-service:${{ github.sha }}
         docker push daprtalks.azurecr.io/order-service:${{ github.sha }}
 
     - uses: azure/k8s-set-context@v1
@@ -40,7 +40,7 @@ jobs:
       with:
         namespace: default
         manifests: |
-          k8s-deploy/order-service.yaml
+          order-service.yaml
         images: |
           daprtalks.azurecr.io/order-service:${{ github.sha }}
         imagepullsecrets: |
