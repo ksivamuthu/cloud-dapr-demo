@@ -40,6 +40,7 @@ jobs:
         manifests: |
           components/messagebus.yaml
           components/statestore.yaml
+          components/notification.yaml
 
     - uses: azure/k8s-deploy@v1
       with:
