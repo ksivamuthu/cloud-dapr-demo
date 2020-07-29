@@ -71,7 +71,7 @@ app.post('/order-status/:status', async (req, res) => {
     const key = req.body.data['key'];
     console.log(`Order ${key} Status: ${req.params.status}`);
 
-    sendNotification(orderId, status);
+    sendNotification(key, req.params.status);
 
     saveOrderStatus(key, req.params.status)
         .then(() => res.status(200).end())
