@@ -83,7 +83,7 @@ function sendNotification(orderId, status) {
     axios.post(notificationUrl, {
         operation: 'create',
         data: `The order ${orderId} is ${status}`,
-        metadata: { toNumber: "412-209-5786" }
+        metadata: { toNumber: "+14122095786" }
     }).then(() => console.log('success'))
         .catch((e) => console.error(e));
 }

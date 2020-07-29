@@ -6,7 +6,7 @@ spec:
   type: bindings.twilio.sms
   metadata:
   - name: fromNumber # required.
-    value: 412-209-5786
+    value: "+12037180573"
   - name: accountSid # required.
     secretKeyRef:
       name: twilio
