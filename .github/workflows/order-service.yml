@@ -40,7 +40,7 @@ jobs:
       with:
         namespace: default
         manifests: |
-          order-service.yaml
+          $GITHUB_WORKSPACE/order-service/order-service.yaml
         images: |
           daprtalks.azurecr.io/order-service:${{ github.sha }}
         imagepullsecrets: |
