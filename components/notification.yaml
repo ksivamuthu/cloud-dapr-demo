@@ -11,7 +11,7 @@ spec:
     secretKeyRef:
       name: twilio
       key: account-sid
-  - name: authToken .
+  - name: authToken
     secretKeyRef:
       name: twilio
       key: auth-token
