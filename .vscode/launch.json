@@ -18,48 +18,10 @@
             }
         },
         {
-            "type": "node",
-            "request": "launch",
-            "name": "Order Service",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/order-service/app.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Kitchen Service",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/kitchen-service/app.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Delivery Service",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/delivery-service/app.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Order Service with Dapr",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/order-service/app.js",
-            "preLaunchTask": "daprd-debug",
-            "postDebugTask": "daprd-down"
-        },
-        {
             "name": "Order Service (.NET Core) with Dapr",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "daprd-debug-1",
+            "preLaunchTask": "daprd-debug",
             "program": "${workspaceFolder}/order-dotnet-core-service/bin/Debug/netcoreapp3.1/OrderService.dll",
             "args": [],
             "cwd": "${workspaceFolder}/order-dotnet-core-service",
@@ -67,29 +29,7 @@
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "postDebugTask": "daprd-down-1"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Kitchen Service with Dapr",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/kitchen-service/app.js",
-            "preLaunchTask": "daprd-debug-2",
-            "postDebugTask": "daprd-down-2"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Delivery Service with Dapr",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/delivery-service/app.js",
-            "preLaunchTask": "daprd-debug-3",
-            "postDebugTask": "daprd-down-3"
+            "postDebugTask": "daprd-down"
         }
     ]
 }

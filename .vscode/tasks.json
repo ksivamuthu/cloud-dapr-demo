@@ -3,57 +3,14 @@
 	"tasks": [
 		{
 			"appId": "order-service",
-			"appPort": 3000,
-			"label": "daprd-debug",
-			"type": "daprd"
-		},
-		{
-			"appId": "order-service",
-			"label": "daprd-down",
-			"type": "daprd-down"
-		},
-		{
-			"label": "build-order-service",
-			"command": "dotnet",
-			"type": "process",
-			"args": [
-				"build",
-				"${workspaceFolder}/order-dotnet-core-service/OrderService.csproj"
-			],
-			"problemMatcher": "$msCompile"
-		},
-		{
-			"appId": "order-service",
 			"appPort": 5000,
-			"label": "daprd-debug-1",
+			"label": "daprd-debug",
 			"type": "daprd",
 			"dependsOn": "build-order-service"
 		},
 		{
 			"appId": "order-service",
-			"label": "daprd-down-1",
-			"type": "daprd-down"
-		},
-		{
-			"appId": "kitchen-service",
-			"appPort": 3001,
-			"label": "daprd-debug-2",
-			"type": "daprd"
-		},
-		{
-			"appId": "kitchen-service",
-			"label": "daprd-down-2",
-			"type": "daprd-down"
-		},
-		{
-			"appId": "delivery-service",
-			"appPort": 3002,
-			"label": "daprd-debug-3",
-			"type": "daprd"
-		},
-		{
-			"appId": "delivery-service",
-			"label": "daprd-down-3",
+			"label": "daprd-down",
 			"type": "daprd-down"
 		}
 	]
