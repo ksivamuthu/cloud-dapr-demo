@@ -16,6 +16,7 @@ app.get('/healthz', (req, res) => {
 app.get('/dapr/subscribe', (req, res) => {
     res.json([
         {
+            pubsubname: 'messagebus',
             topic: 'OrderReceived',
             route: '/receive-order'
         }

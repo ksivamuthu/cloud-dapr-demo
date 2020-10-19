@@ -45,22 +45,27 @@ function publishOrderReceived(order) {
 app.get('/dapr/subscribe', (_req, res) => {
     res.json([
         {
+            pubsubname: 'messagebus',
             topic: 'OrderReceived',
             route: 'order-status/OrderReceived'
         },
         {
+            pubsubname: 'messagebus',
             topic: 'Processing',
             route: 'order-status/Processing'
         },
         {
+            pubsubname: 'messagebus',
             topic: 'ReadyToPickup',
             route: 'order-status/ReadyToPickup'
         },
         {
+            pubsubname: 'messagebus',
             topic: 'DeliveryOnWay',
             route: 'order-status/DeliveryOnWay'
         },
         {
+            pubsubname: 'messagebus',
             topic: 'Delivered',
             route: 'order-status/Delivered'
         }

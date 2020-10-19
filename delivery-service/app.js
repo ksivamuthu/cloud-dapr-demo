@@ -17,6 +17,7 @@ app.get('/dapr/subscribe', (req, res) => {
     console.log(req.body);
     res.json([
         {
+            pubsubname: 'messagebus',
             topic: 'ReadyToPickup',
             route: '/ready-to-pickup'
         }
