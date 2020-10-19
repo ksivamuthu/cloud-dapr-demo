@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/*+json' }));
 
 const daprPort = process.env.DAPR_HTTP_PORT || 3500;
-const messageUrl = `http://localhost:${daprPort}/v1.0/publish`;
+const messageUrl = `http://localhost:${daprPort}/v1.0/publish/messagebus`;
 
 app.get('/healthz', (req, res) => {
     res.send({ app: 'kitchen-service', status: 'healthy' });

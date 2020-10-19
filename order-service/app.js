@@ -12,7 +12,7 @@ app.use(bodyParser.json({ type: 'application/*+json' }));
 const daprPort = process.env.DAPR_HTTP_PORT || 3500;
 const stateStore = 'statestore';
 const stateUrl = `http://localhost:${daprPort}/v1.0/state/${stateStore}`;
-const messageUrl = `http://localhost:${daprPort}/v1.0/publish`;
+const messageUrl = `http://localhost:${daprPort}/v1.0/publish/messagebus`;
 const notificationUrl = `http://localhost:${daprPort}/v1.0/bindings/notification`
 
 app.get('/healthz', (req, res) => {
