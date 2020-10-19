@@ -22,7 +22,7 @@ spec:
   - name: actorStateStore
     value: "true"
   - name: redisHost
-    value: redis-master:6379
+    value: redis-master.default.svc.cluster.local:6379
   - name: redisPassword
     secretKeyRef:
       name: redis

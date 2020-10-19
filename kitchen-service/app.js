@@ -14,7 +14,6 @@ app.get('/healthz', (req, res) => {
 });
 
 app.get('/dapr/subscribe', (req, res) => {
-    console.log(req.body);
     res.json([
         {
             topic: 'OrderReceived',
@@ -24,6 +23,7 @@ app.get('/dapr/subscribe', (req, res) => {
 });
 
 app.post('/receive-order', (req, res) => {
+    console.log(req.body);
     startProcessing(req.body.data);
     res.status(200).end();
 });

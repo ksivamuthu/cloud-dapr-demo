@@ -10,28 +10,18 @@
 #   - name: redisPassword
 #     value: ""
 
-# apiVersion: dapr.io/v1alpha1
-# kind: Component
-# metadata:
-#   name: messagebus
-# spec:
-#   type: pubsub.redis
-#   metadata:
-#   - name: redisHost
-#     value: redis-master:6379
-#   - name: redisPassword
-#     secretKeyRef:
-#       name: redis
-#       key:  redis-password
-# auth:
-#   secretStore: kubernetes
-
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: messagebus  
+  name: messagebus
 spec:
-  type: pubsub.nats
+  type: pubsub.redis
   metadata:
-  - name: natsURL
-    value: nats-client.default.svc.cluster.local:4222
+  - name: redisHost
+    value: redis-master.default.svc.cluster.local:6379
+  - name: redisPassword
+    secretKeyRef:
+      name: redis
+      key:  redis-password
+auth:
+  secretStore: kubernetes
